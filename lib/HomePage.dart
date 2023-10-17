@@ -1,6 +1,7 @@
 import 'package:channab_fram_flutter/widgets/CustomeAppbar.dart';
 import 'package:flutter/material.dart';
 import 'widgets/AnimalInfoBox.dart';
+import 'widgets/AnimalListCard.dart';
 import 'widgets/CustomeDrawer.dart';
 import 'widgets/CustomeDropdownButton.dart';
 import 'widgets/DashboardBox.dart';
@@ -70,6 +71,19 @@ class _HomePageState extends State<HomePage> {
                   AnimalInfoBox(title: "Other", value: "10", percentage: "40%", color: Colors.orange),
                 ],
               ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: List.generate(10, (index) {
+                return AnimalListCard(
+                  imagePath: 'path_to_your_image', // Replace with your image path
+                  title: "Animal ${index + 1}",
+                  age: "${3 + index} Years",
+                  weight: "${200 + index * 10} Kg",
+                );
+              }),
             ),
           ),
 
