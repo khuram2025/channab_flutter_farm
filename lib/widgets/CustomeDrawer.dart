@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../Screens/AnimalList.dart';
+
 class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -32,9 +34,10 @@ class CustomDrawer extends StatelessWidget {
               leading: Icon(Icons.list),
               title: Text('Animals List'),
               onTap: () {
-                // Handle Animals List tap
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => AnimalListPage()));
               },
             ),
+
             ListTile(
               leading: Icon(Icons.attach_money),
               title: Text('Finance'),

@@ -1,4 +1,5 @@
 import 'package:channab_fram_flutter/HomePage.dart';
+import 'package:channab_fram_flutter/app_theme.dart';  // Import the theme file
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,6 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        primaryColor: primaryColor, // Use the primary color from app_theme.dart
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
@@ -20,4 +22,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
