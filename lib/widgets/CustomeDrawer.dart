@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../HomePage.dart';
 import '../Screens/AnimalList.dart';
+import '../Screens/EmployeeListPage.dart';
+import '../Screens/FinanaceHome.dart';
 
 class CustomDrawer extends StatelessWidget {
   @override
@@ -27,7 +30,7 @@ class CustomDrawer extends StatelessWidget {
               leading: Icon(Icons.dashboard),
               title: Text('Dashboard'),
               onTap: () {
-                // Handle Dashboard tap
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage()));
               },
             ),
             ListTile(
@@ -42,14 +45,14 @@ class CustomDrawer extends StatelessWidget {
               leading: Icon(Icons.attach_money),
               title: Text('Finance'),
               onTap: () {
-                // Handle Finance tap
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => FinanceHome()));
               },
             ),
             ListTile(
               leading: Icon(Icons.people),
               title: Text('HR'),
               onTap: () {
-                // Handle HR tap
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => EmployeeListPage()));// Handle HR tap
               },
             ),
             ListTile(
