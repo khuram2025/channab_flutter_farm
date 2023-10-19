@@ -4,7 +4,7 @@ import '../widgets/AnimalDetail/FamilyTab.dart';
 import '../widgets/AnimalDetail/HealthTab.dart';
 import '../widgets/AnimalDetail/MilkingTab.dart';
 import '../widgets/AnimalDetail/WeightTab.dart';
-import '../widgets/OverviewTab.dart';
+import '../widgets/AnimalDetail/OverviewTab.dart';
 
 class AnimalDetailPage extends StatefulWidget {
   @override

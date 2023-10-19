@@ -1,3 +1,4 @@
+import 'package:channab_fram_flutter/Screens/EmployeeDetailPage.dart';
 import 'package:channab_fram_flutter/widgets/CustomeAppbar.dart';
 
 import 'package:channab_fram_flutter/widgets/CustomeDrawer.dart';
@@ -24,10 +25,10 @@ class _EmployeeListPageState extends State<EmployeeListPage> {
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   // MaterialPageRoute(builder: (context) => EmployeeDetailPage()), // This will navigate to the EmployeeDetailPage
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EmployeeDetailPage()), // This will navigate to the EmployeeDetailPage
+                );
               },
               child: EmployeeListCard(
                 imagePath: 'path_to_your_employee_image', // Replace with your employee image path
