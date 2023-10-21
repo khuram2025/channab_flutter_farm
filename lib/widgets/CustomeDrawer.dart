@@ -4,9 +4,11 @@ import '../HomePage.dart';
 import '../Screens/AnimalList.dart';
 import '../Screens/EmployeeListPage.dart';
 import '../Screens/FinanaceHome.dart';
+import '../Screens/LoginPage.dart';
 
 class CustomDrawer extends StatelessWidget {
   @override
+  bool isUserLoggedIn = false;
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
@@ -70,12 +72,21 @@ class CustomDrawer extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: Icon(Icons.logout),
-              title: Text('Logout'),
-              onTap: () {
-                // Handle Logout tap
-              },
-            ),
+        leading: Icon(isUserLoggedIn ? Icons.logout : Icons.login),
+        title: Text(isUserLoggedIn ? 'Logout' : 'Login'),
+        onTap: () {
+          if (isUserLoggedIn) {
+            // Handle Logout logic
+            isUserLoggedIn = false;
+          } else {
+            // Navigate to Login Page
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => LoginPage()),
+            );
+          }
+        },
+      ),
           ],
         ),
       ),
