@@ -7,8 +7,12 @@ import '../Screens/FinanaceHome.dart';
 import '../Screens/LoginPage.dart';
 
 class CustomDrawer extends StatelessWidget {
+  final String token;
+  CustomDrawer({required this.token});
+
   @override
   bool isUserLoggedIn = false;
+
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
@@ -32,14 +36,14 @@ class CustomDrawer extends StatelessWidget {
               leading: Icon(Icons.dashboard),
               title: Text('Dashboard'),
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage(token: token)));
               },
             ),
             ListTile(
               leading: Icon(Icons.list),
               title: Text('Animals List'),
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => AnimalListPage()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => AnimalListPage(token: token)));
               },
             ),
 
@@ -47,14 +51,14 @@ class CustomDrawer extends StatelessWidget {
               leading: Icon(Icons.attach_money),
               title: Text('Finance'),
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => FinanceHome()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => FinanceHome(token: token)));
               },
             ),
             ListTile(
               leading: Icon(Icons.people),
               title: Text('HR'),
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => EmployeeListPage()));// Handle HR tap
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => EmployeeListPage(token: token)));// Handle HR tap
               },
             ),
             ListTile(

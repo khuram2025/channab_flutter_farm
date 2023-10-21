@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
         print("Login successful! Navigating to HomePage...");
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => HomePage()),
+          MaterialPageRoute(builder: (context) => HomePage(token: response['token'])), // pass the token here
         );
       } else {
         print("Login failed. Check your credentials.");

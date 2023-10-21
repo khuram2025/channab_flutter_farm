@@ -2,6 +2,8 @@ import 'package:channab_fram_flutter/HomePage.dart';
 import 'package:channab_fram_flutter/app_theme.dart';  // Import the theme file
 import 'package:flutter/material.dart';
 
+import 'Screens/LoginPage.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomePage(), // Set HomePage as the default route
+      home: LoginPage(), // Set HomePage as the default route
     );
   }
 }

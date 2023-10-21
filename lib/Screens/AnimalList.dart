@@ -6,16 +6,22 @@ import 'package:flutter/material.dart';
 import 'AnimalDetailPage.dart';
 
 class AnimalListPage extends StatefulWidget {
+  final String token;
+
+  AnimalListPage({required this.token});
+
   @override
   _AnimalListPageState createState() => _AnimalListPageState();
 }
 
 class _AnimalListPageState extends State<AnimalListPage> {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
-      drawer: CustomDrawer(),
+      drawer: CustomDrawer(token: widget.token),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView.builder(

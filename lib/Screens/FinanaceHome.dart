@@ -6,6 +6,9 @@ import '../widgets/Finanace/Transaction.dart';
 import '../widgets/Finanace/finBox.dart';
 
 class FinanceHome extends StatefulWidget {
+  final String token;
+
+  FinanceHome({required this.token});
   @override
   _FinanceHomeState createState() => _FinanceHomeState();
 }
@@ -36,7 +39,8 @@ class _FinanceHomeState extends State<FinanceHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
-      drawer: CustomDrawer(),
+      drawer: CustomDrawer(token: widget.token),
+
       body: Column(
         children: [
           // Finance boxes

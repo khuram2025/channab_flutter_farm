@@ -1,5 +1,6 @@
 import 'package:channab_fram_flutter/widgets/CustomeAppbar.dart';
 import 'package:flutter/material.dart';
+import 'api/api_service.dart';
 import 'widgets/AnimalInfoBox.dart';
 import 'widgets/AnimalListCard.dart';
 import 'widgets/CustomeDrawer.dart';
@@ -7,18 +8,46 @@ import 'widgets/CustomeDropdownButton.dart';
 import 'widgets/DashboardBox.dart';
 
 class HomePage extends StatefulWidget {
+  final String token;
+
+  HomePage({required this.token});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   String? _selectedTimeFilter = "This Month";
+  Map<String, dynamic>? homeData;
+  final ApiService _apiService = ApiService();
+
 
   @override
+  void initState() {
+    super.initState();
+    fetchHomeData();
+  }
+
+  fetchHomeData() async {
+    // Make sure to pass the token from wherever you're storing it
+    final data = await _apiService.getHomeData(widget.token, _selectedTimeFilter!);
+
+    if (data != null) {
+      print("Home data fetched successfully:");
+      print(data);
+
+      setState(() {
+        homeData = data;
+      });
+    } else {
+      print("Error fetching home data.");
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
-      drawer: CustomDrawer(),
+      drawer: CustomDrawer(token: widget.token),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -47,11 +76,11 @@ class _HomePageState extends State<HomePage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    DashboardBox(title: "Total Income", value: "\$1000", percentageChange: "+20%", isSuccess: true),
+                    DashboardBox(title: "Total Income", value: "\$${homeData?['total_income'] ?? 'Loading...'}", percentageChange: "+20%", isSuccess: true),
 
-                    DashboardBox(title: "Total Expense", value: "\$1000", percentageChange: "+20%", isSuccess: true),
+                    DashboardBox(title: "Total Expense", value: "\$${homeData?['total_expense'] ?? 'Loading...'}", percentageChange: "+20%", isSuccess: true),
 
-                    DashboardBox(title: "Total Milk", value: "\$1000", percentageChange: "+20%", isSuccess: true)
+                    DashboardBox(title: "Total Milk", value: "\$${homeData?['total_milk_today'] ?? 'Loading...'}", percentageChange: "+20%", isSuccess: true)
 
                   ],
                 ),

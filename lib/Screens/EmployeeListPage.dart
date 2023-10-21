@@ -8,6 +8,9 @@ import '../widgets/HR/EmployeeCard.dart';
 
 
 class EmployeeListPage extends StatefulWidget {
+  final String token;
+
+  EmployeeListPage({required this.token});
   @override
   _EmployeeListPageState createState() => _EmployeeListPageState();
 }
@@ -17,7 +20,8 @@ class _EmployeeListPageState extends State<EmployeeListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
-      drawer: CustomDrawer(),
+      drawer: CustomDrawer(token: widget.token),
+
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView.builder(
