@@ -38,3 +38,17 @@ class Animal {
     return "Some Age";
   }
 }
+
+class Transaction {
+  final String category;
+  final double totalAmount;
+
+  Transaction({required this.category, required this.totalAmount});
+
+  factory Transaction.fromJson(Map<String, dynamic> json) {
+    return Transaction(
+      category: json['category'],
+      totalAmount: double.tryParse(json['total_amount'].toString()) ?? 0.0,
+    );
+  }
+}

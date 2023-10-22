@@ -1,6 +1,9 @@
 import 'package:channab_fram_flutter/widgets/CustomeAppbar.dart';
+import 'package:channab_fram_flutter/widgets/Finanace/SummaryAndTransactionWidget.dart';
+import 'package:channab_fram_flutter/widgets/Finanace/Transaction.dart';
 import 'package:flutter/material.dart';
 import 'api/api_service.dart';
+import 'api/homepage/timeFilter.dart';
 import 'model/homeData.dart';
 import 'widgets/AnimalInfoBox.dart';
 import 'widgets/AnimalListCard.dart';
@@ -23,6 +26,9 @@ class _HomePageState extends State<HomePage> {
   final ApiService _apiService = ApiService();
 
   List<Animal> animals = [];
+  List<Transaction> transactions = [];
+  List<Map<String, dynamic>> incomeSummary = [];
+  List<Map<String, dynamic>> expenseSummary = [];
 
   @override
   void initState() {
@@ -33,16 +39,35 @@ class _HomePageState extends State<HomePage> {
   fetchHomeData() async {
     final data = await _apiService.getHomeData(widget.token, _selectedTimeFilter!);
     if (data != null) {
+      // print("API Response: $data");
       List<dynamic> animalData = data['animals'];
       List<Animal> fetchedAnimals = animalData.map((a) => Animal.fromJson(a)).toList();
+
+      List<dynamic> transactionData = data['transactions'] ?? [];
+      List<Transaction> fetchedTransactions = transactionData.map((t) => Transaction.fromJson(t)).toList();
+
       setState(() {
         homeData = data;
         animals = fetchedAnimals;
+        transactions = fetchedTransactions;
+        incomeSummary = List<Map<String, dynamic>>.from(data['summary'] ?? []);
+        expenseSummary = List<Map<String, dynamic>>.from(data['expense_summary'] ?? []);
       });
     } else {
       print("Error fetching home data.");
     }
   }
+  void _onTimeFilterChanged(String? newFilter) {
+    print("Time filter changed to: $newFilter");
+    if (_selectedTimeFilter != newFilter) {
+      setState(() {
+        _selectedTimeFilter = newFilter;
+      });
+      fetchHomeData(); // Fetch new data when the time filter changes
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -59,13 +84,10 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Farm Name", style: TextStyle(fontSize: 24)),
-                  CustomDropdown(
-                    initialValue: "This Month",
-                    onChanged: (value) {
-                      // Handle dropdown value change
-                    },
-                  )
-
+                  TimeFilter(
+                    initialValue: _selectedTimeFilter,
+                    onChanged: _onTimeFilterChanged,
+                  ),
                 ],
               ),
             ),
@@ -78,17 +100,24 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     DashboardBox(title: "Total Income", value: "\$${homeData?['total_income'] ?? 'Loading...'}", percentageChange: "+20%", isSuccess: true),
-
-                    DashboardBox(title: "Total Expense", value: "\$${homeData?['total_expense'] ?? 'Loading...'}", percentageChange: "+20%", isSuccess: true),
-
-                    DashboardBox(title: "Total Milk", value: "\$${homeData?['total_milk_today'] ?? 'Loading...'}", percentageChange: "+20%", isSuccess: true)
-
+                    DashboardBox(title: "Total Expense", value: "\$${homeData?['total_expense'] ?? 'Loading...'}", percentageChange: "-20%", isSuccess: false),
+                    DashboardBox(title: "Total Milk", value: "\$${homeData?['total_milk_today'] ?? 'Loading...'}", percentageChange: "+20%", isSuccess: true),
                   ],
                 ),
-              )
-
-
+              ),
             ),
+
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SummaryAndTransactionWidget(
+                incomeSummary: incomeSummary,
+                expenseSummary: expenseSummary,
+
+              ),
+            ),
+
+
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: SingleChildScrollView(
@@ -104,16 +133,15 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: animals.map((animal) {
-                  return AnimalListCard(animal: animal);
-                }).toList(),
-              ),
-            ),
-
-
+            // Animal List Cards (Commented out as the widget is not provided)
+            // Padding(
+            //   padding: const EdgeInsets.all(16.0),
+            //   child: Column(
+            //     children: animals.map((animal) {
+            //       return AnimalListCard(animal: animal);
+            //     }).toList(),
+            //   ),
+            // ),
           ],
         ),
       ),

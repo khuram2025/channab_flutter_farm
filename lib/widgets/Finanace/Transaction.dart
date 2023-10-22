@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TransactionWidget extends StatefulWidget {
   final String title;
   final String description;
-  final int amount;
+  final double amount;
   final String addedBy;
   final String time;
 
