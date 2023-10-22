@@ -57,15 +57,19 @@ class _HomePageState extends State<HomePage> {
       print("Error fetching home data.");
     }
   }
+
   void _onTimeFilterChanged(String? newFilter) {
     print("Time filter changed to: $newFilter");
     if (_selectedTimeFilter != newFilter) {
       setState(() {
         _selectedTimeFilter = newFilter;
       });
-      fetchHomeData(); // Fetch new data when the time filter changes
+
+      // Fetch new data when the time filter changes
+      fetchHomeData();
     }
   }
+
 
 
 
