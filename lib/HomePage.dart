@@ -1,6 +1,7 @@
 import 'package:channab_fram_flutter/widgets/CustomeAppbar.dart';
 import 'package:flutter/material.dart';
 import 'api/api_service.dart';
+import 'model/homeData.dart';
 import 'widgets/AnimalInfoBox.dart';
 import 'widgets/AnimalListCard.dart';
 import 'widgets/CustomeDrawer.dart';
@@ -21,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   Map<String, dynamic>? homeData;
   final ApiService _apiService = ApiService();
 
+  List<Animal> animals = [];
 
   @override
   void initState() {
@@ -29,21 +31,20 @@ class _HomePageState extends State<HomePage> {
   }
 
   fetchHomeData() async {
-    // Make sure to pass the token from wherever you're storing it
     final data = await _apiService.getHomeData(widget.token, _selectedTimeFilter!);
-
     if (data != null) {
-      print("Home data fetched successfully:");
-      print(data);
-
+      List<dynamic> animalData = data['animals'];
+      List<Animal> fetchedAnimals = animalData.map((a) => Animal.fromJson(a)).toList();
       setState(() {
         homeData = data;
+        animals = fetchedAnimals;
       });
     } else {
       print("Error fetching home data.");
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
@@ -106,16 +107,12 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
-                children: List.generate(10, (index) {
-                  return AnimalListCard(
-                    imagePath: 'path_to_your_image', // Replace with your image path
-                    title: "Animal ${index + 1}",
-                    age: "${3 + index} Years",
-                    weight: "${200 + index * 10} Kg",
-                  );
-                }),
+                children: animals.map((animal) {
+                  return AnimalListCard(animal: animal);
+                }).toList(),
               ),
             ),
+
 
           ],
         ),

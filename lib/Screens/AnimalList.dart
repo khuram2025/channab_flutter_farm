@@ -34,12 +34,12 @@ class _AnimalListPageState extends State<AnimalListPage> {
                   MaterialPageRoute(builder: (context) => AnimalDetailPage()),
                 );
               },
-              child: AnimalListCard(
-                imagePath: 'path_to_your_image', // Replace with your image path
-                title: "Animal ${index + 1}",
-                age: "${3 + index} Years",
-                weight: "${200 + index * 10} Kg",
-              ),
+              // child: AnimalListCard(
+              //   imagePath: 'path_to_your_image', // Replace with your image path
+              //   title: "Animal ${index + 1}",
+              //   age: "${3 + index} Years",
+              //   weight: "${200 + index * 10} Kg",
+              // ),
             );
           },
         ),

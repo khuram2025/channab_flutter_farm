@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  final String baseUrl = "http://farmapp.channab.com/";
+  final String baseUrl = "http://farmapp.channab.com";
 
   Future<Map<String, dynamic>?> loginUser(String mobileNumber, String password) async {
     final response = await http.post(

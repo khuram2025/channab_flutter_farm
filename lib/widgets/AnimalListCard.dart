@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
+import '../model/homeData.dart';
 
 class AnimalListCard extends StatelessWidget {
-  final String imagePath;
-  final String title;
-  final String age;
-  final String weight;
+  final Animal animal;
+  final String serverBaseUrl = 'http://farmapp.channab.com'; // Replace with your actual server URL
+  final String placeholderImagePath = 'assets/path_to_default_image.png'; // Replace with your actual placeholder image path
 
-  AnimalListCard({
-    required this.imagePath,
-    required this.title,
-    required this.age,
-    required this.weight,
-  });
+  AnimalListCard({required this.animal});
 
   Widget _infoBox(String text, Color color) {
     return Container(
@@ -27,6 +22,12 @@ class AnimalListCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String sexInfo = animal.sex == 'male' ? 'Male' : 'Female';
+    String statusInfo = animal.status == 'active' ? 'Active' : 'Inactive';
+    String milkProdInfo = animal.animalType == 'milking' ? 'Milk-Prod' : 'Non-Milk-Prod';
+
+    String imageUrl = animal.image != null ? '$serverBaseUrl${animal.image}' : placeholderImagePath;
+
     return Card(
       elevation: 4.0,
       child: Container(
@@ -44,7 +45,14 @@ class AnimalListCard extends StatelessWidget {
                       topLeft: Radius.circular(4.0),
                       bottomLeft: Radius.circular(4.0),
                     ),
-                    child: Image.asset(imagePath, fit: BoxFit.cover),
+                    child: Image.network(
+                      imageUrl,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        print('Failed to load image from $imageUrl');
+                        return Image.asset(placeholderImagePath, fit: BoxFit.cover);
+                      },
+                    ),
                   ),
                 ),
                 Expanded(
@@ -54,28 +62,28 @@ class AnimalListCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                        Text(animal.tag, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                         SizedBox(height: 4),
                         Row(
                           children: [
                             Icon(Icons.calendar_today_outlined, size: 12, color: Colors.grey[600]),
                             SizedBox(width: 4),
-                            Text(age, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
+                            Text(animal.age, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
                           ],
                         ),
                         Row(
                           children: [
                             Icon(Icons.monitor_weight_outlined, size: 12, color: Colors.grey[600]),
                             SizedBox(width: 4),
-                            Text(weight, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
+                            Text('${animal.purchaseCost} Kg', style: TextStyle(fontSize: 12, color: Colors.grey[600])),
                           ],
                         ),
                         SizedBox(height: 4),
                         Row(
                           children: [
-                            _infoBox("Female", Colors.green),
-                            _infoBox("Active", Colors.green),
-                            _infoBox("Milk-Prod", Colors.green),
+                            _infoBox(sexInfo, Colors.green),
+                            _infoBox(statusInfo, Colors.green),
+                            _infoBox(milkProdInfo, Colors.green),
                           ],
                         ),
                       ],
